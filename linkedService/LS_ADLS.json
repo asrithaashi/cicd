@@ -5,17 +5,26 @@
 			"envVaultUrl": {
 				"type": "string",
 				"defaultValue": "@linkedService().envVaultUrl"
+			},
+			"storageAccountUrl": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://stdevtrial.dfs.core.windows.net/",
+			"url": "@{linkedService().storageAccountUrl}",
 			"accountKey": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
 					"referenceName": "LS_AzureKeyVault",
-					"type": "LinkedServiceReference"
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"vaultUrl": {
+							"value": "@linkedService().envVaultUrl",
+							"type": "Expression"
+						}
+					}
 				},
 				"secretName": "adls-connection-string"
 			}
