@@ -3,14 +3,13 @@
 	"properties": {
 		"parameters": {
 			"vaultUrl": {
-				"type": "string",
-				"defaultValue": "@linkedService().vaultUrl"
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://kv-dev-trial.vault.azure.net/"
+			"baseUrl": "@linkedService().vaultUrl"
 		}
 	}
 }
