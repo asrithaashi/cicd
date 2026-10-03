@@ -50,13 +50,21 @@
 				"inputs": [
 					{
 						"referenceName": "Source",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"dsKeyVaultURL": "@pipeline().parameters.KeyVaultURL",
+							"dsStorageURL": "@pipeline().parameters.StorageURL"
+						}
 					}
 				],
 				"outputs": [
 					{
 						"referenceName": "Sink",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"dsKeyVaultURL": "@pipeline().parameters.KeyVaultURL",
+							"dsStorageURL": "@pipeline().parameters.StorageURL"
+						}
 					}
 				]
 			}
@@ -65,6 +73,10 @@
 			"KeyVaultURL": {
 				"type": "string",
 				"defaultValue": "https://azure.net"
+			},
+			"StorageURL": {
+				"type": "string",
+				"defaultValue": "https://stdevtrial.dfs.core.windows.net/"
 			}
 		},
 		"annotations": []

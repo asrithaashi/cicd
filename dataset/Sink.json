@@ -6,9 +6,20 @@
 			"type": "LinkedServiceReference",
 			"parameters": {
 				"envVaultUrl": {
-					"value": "@pipeline().parameters.KeyVaultURL",
+					"value": "@dataset().dsKeyVaultURL",
 					"type": "Expression"
-				}
+				},
+				"storageAccountUrl": "@dataset().dsStorageURL"
+			}
+		},
+		"parameters": {
+			"dsKeyVaultURL": {
+				"type": "string",
+				"defaultValue": "https://azure.net"
+			},
+			"dsStorageURL": {
+				"type": "string",
+				"defaultValue": "https://stdevtrial.dfs.core.windows.net/"
 			}
 		},
 		"annotations": [],

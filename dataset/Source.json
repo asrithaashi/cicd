@@ -8,12 +8,18 @@
 				"envVaultUrl": {
 					"value": "@dataset().dsKeyVaultURL",
 					"type": "Expression"
-				}
+				},
+				"storageAccountUrl": "@dataset().dsStorageURL"
 			}
 		},
 		"parameters": {
 			"dsKeyVaultURL": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "https://azure.net"
+			},
+			"dsStorageURL": {
+				"type": "string",
+				"defaultValue": "https://stdevtrial.dfs.core.windows.net/"
 			}
 		},
 		"annotations": [],
@@ -22,7 +28,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "text.csv",
-				"fileSystem": "Input"
+				"fileSystem": "input"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
