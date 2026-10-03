@@ -1,0 +1,92 @@
+name: Deploy ADF Environments
+
+on:
+  push:
+    branches:
+      - adf_publish  # Automatically triggers when you click "Publish" in the DEV ADF UI
+  workflow_dispatch: # 👈 Add this line to enable the manual play button
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  # ==========================================
+  # QA DEPLOYMENT
+  # ==========================================
+  deploy-qa:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Log in to Azure
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Deploy to QA Factory
+      uses: azure/arm-deploy@v2
+      with:
+        resourceGroupName: 'rg-qa'
+        template: './adf-dev-trial/ARMTemplateForFactory.json'
+        parameters: './adf-dev-trial/ARMTemplateParametersForFactory.json'
+        overrideParameters: >
+          -factoryName "adf-qa-trial"
+          -LS_AzureKeyVault_properties_typeProperties_baseUrl "https://azure.net"
+
+  # ==========================================
+  # UAT DEPLOYMENT
+  # ==========================================
+  deploy-uat:
+    runs-on: ubuntu-latest
+    needs: deploy-qa
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Log in to Azure
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Deploy to UAT Factory
+      uses: azure/arm-deploy@v2
+      with:
+        resourceGroupName: 'rg-uat'
+        template: './adf-dev-trial/ARMTemplateForFactory.json'
+        parameters: './adf-dev-trial/ARMTemplateParametersForFactory.json'
+        overrideParameters: >
+          -factoryName "adf-uat-trial"
+          -LS_AzureKeyVault_properties_typeProperties_baseUrl "https://azure.net"
+
+  # ==========================================
+  # PROD DEPLOYMENT
+  # ==========================================
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-uat
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Log in to Azure
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Deploy to PROD Factory
+      uses: azure/arm-deploy@v2
+      with:
+        resourceGroupName: 'rg-prod'
+        template: './adf-dev-trial/ARMTemplateForFactory.json'
+        parameters: './adf-dev-trial/ARMTemplateParametersForFactory.json'
+        overrideParameters: >
+          -factoryName "adf-prod-trial"
+          -LS_AzureKeyVault_properties_typeProperties_baseUrl "https://azure.net"
