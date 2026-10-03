@@ -1,0 +1,16 @@
+{
+	"name": "LS_AzureKeyVault",
+	"properties": {
+		"parameters": {
+			"vaultUrl": {
+				"type": "string",
+				"defaultValue": "@linkedService().vaultUrl"
+			}
+		},
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-dev-trial.vault.azure.net/"
+		}
+	}
+}
