@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - adf_publish  # Automatically triggers when you click "Publish" in the DEV ADF UI
+  workflow_dispatch: # 👈 Add this line to enable the manual play button
 
 permissions:
   id-token: write
