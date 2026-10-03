@@ -3,15 +3,15 @@ name: Deploy ADF Environments
 on:
   push:
     branches:
-      - adf_publish  # Runs automatically when you click "Publish" in the ADF UI
+      - adf_publish  # Automatically triggers when you click "Publish" in the DEV ADF UI
 
 permissions:
-  id-token: write    # Required for OIDC Azure Login
+  id-token: write
   contents: read
 
 jobs:
   # ==========================================
-  # 1. QA DEPLOYMENT STAGE
+  # QA DEPLOYMENT
   # ==========================================
   deploy-qa:
     runs-on: ubuntu-latest
@@ -26,7 +26,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Deploy ARM Template to QA
+    - name: Deploy to QA Factory
       uses: azure/arm-deploy@v2
       with:
         resourceGroupName: 'rg-qa'
@@ -37,11 +37,11 @@ jobs:
           -LS_AzureKeyVault_properties_typeProperties_baseUrl "https://azure.net"
 
   # ==========================================
-  # 2. UAT DEPLOYMENT STAGE
+  # UAT DEPLOYMENT
   # ==========================================
   deploy-uat:
     runs-on: ubuntu-latest
-    needs: deploy-qa  # Ensures UAT waits until QA finishes successfully
+    needs: deploy-qa
     steps:
     - name: Checkout Source Code
       uses: actions/checkout@v4
@@ -53,7 +53,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Deploy ARM Template to UAT
+    - name: Deploy to UAT Factory
       uses: azure/arm-deploy@v2
       with:
         resourceGroupName: 'rg-uat'
@@ -64,11 +64,11 @@ jobs:
           -LS_AzureKeyVault_properties_typeProperties_baseUrl "https://azure.net"
 
   # ==========================================
-  # 3. PROD DEPLOYMENT STAGE
+  # PROD DEPLOYMENT
   # ==========================================
   deploy-prod:
     runs-on: ubuntu-latest
-    needs: deploy-uat  # Ensures Prod waits until UAT finishes successfully
+    needs: deploy-uat
     steps:
     - name: Checkout Source Code
       uses: actions/checkout@v4
@@ -80,7 +80,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Deploy ARM Template to PROD
+    - name: Deploy to PROD Factory
       uses: azure/arm-deploy@v2
       with:
         resourceGroupName: 'rg-prod'
