@@ -15,7 +15,7 @@
 		"parameters": {
 			"dsKeyVaultURL": {
 				"type": "string",
-				"defaultValue": "https://azure.net"
+				"defaultValue": "https://kv-dev-trial.vault.azure.net/"
 			},
 			"dsStorageURL": {
 				"type": "string",
