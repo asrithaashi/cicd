@@ -155,7 +155,7 @@
 				"parameters": {
 					"KeyVaultURL": {
 						"type": "string",
-						"defaultValue": "https://azure.net"
+						"defaultValue": "https://kv-dev-trial.vault.azure.net/"
 					},
 					"StorageURL": {
 						"type": "string",
@@ -188,7 +188,7 @@
 				"parameters": {
 					"dsKeyVaultURL": {
 						"type": "string",
-						"defaultValue": "https://azure.net"
+						"defaultValue": "https://kv-dev-trial.vault.azure.net/"
 					},
 					"dsStorageURL": {
 						"type": "string",
@@ -233,7 +233,7 @@
 				"parameters": {
 					"dsKeyVaultURL": {
 						"type": "string",
-						"defaultValue": "https://azure.net"
+						"defaultValue": "https://kv-dev-trial.vault.azure.net/"
 					},
 					"dsStorageURL": {
 						"type": "string",
