@@ -5,11 +5,11 @@
 		"factoryName": {
 			"value": "adf-dev-trial"
 		},
-		"LS_AzureKeyVault_properties_typeProperties_baseUrl": {
-			"value": "@linkedService().vaultUrl"
-		},
 		"LS_ADLS_properties_typeProperties_url": {
 			"value": "@{linkedService().storageAccountUrl}"
+		},
+		"LS_AzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "@linkedService().vaultUrl"
 		}
 	}
 }

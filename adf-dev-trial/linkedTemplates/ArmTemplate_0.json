@@ -77,51 +77,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_ADLS",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"envVaultUrl": {
-							"value": "@dataset().dsKeyVaultURL",
-							"type": "Expression"
-						},
-						"storageAccountUrl": "@dataset().dsStorageURL"
-					}
-				},
-				"parameters": {
-					"dsKeyVaultURL": {
-						"type": "string",
-						"defaultValue": "https://kv-dev-trial.vault.azure.net/"
-					},
-					"dsStorageURL": {
-						"type": "string",
-						"defaultValue": "https://stdevtrial.dfs.core.windows.net/"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "text.csv",
-						"fileSystem": "input"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Sink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -154,6 +109,51 @@
 						"type": "AzureBlobFSLocation",
 						"fileName": "text.csv",
 						"fileSystem": "output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"envVaultUrl": {
+							"value": "@dataset().dsKeyVaultURL",
+							"type": "Expression"
+						},
+						"storageAccountUrl": "@dataset().dsStorageURL"
+					}
+				},
+				"parameters": {
+					"dsKeyVaultURL": {
+						"type": "string",
+						"defaultValue": "https://kv-dev-trial.vault.azure.net/"
+					},
+					"dsStorageURL": {
+						"type": "string",
+						"defaultValue": "https://stdevtrial.dfs.core.windows.net/"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "text.csv",
+						"fileSystem": "input"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
